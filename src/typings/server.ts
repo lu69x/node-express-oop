@@ -1,7 +1,7 @@
 import { Application, RequestHandler } from "express";
 import { Sequelize } from "sequelize";
 import http from 'http'
-import Controller from "./controllers";
+import Controller from "./controller";
 
 
 export default class Server {

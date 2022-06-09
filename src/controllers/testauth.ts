@@ -1,24 +1,26 @@
 import { Request, Response, NextFunction } from 'express';
 import Controller, { Methods } from '../typings/controller';
+import Token from './../functions/auth/authorizer';
 
-export default class HelloWorldController extends Controller {
+
+export default class TokenrizeController extends Controller {
     path = '/';
     routes = [
         {
-            path: '/',
+            path: '/auth',
             method: Methods.GET,
-            handler: this.hello,
-            localMiddleware: [],
+            handler: this.tokenrize,
+            localMiddleware: [Token.verify],
         },
     ];
 
-    async hello(
+    async tokenrize(
         req: Request,
         res: Response,
         next: NextFunction
     ): Promise<void> {
         try {
-            const msg = { text: 'hello world!' }
+            const msg = { text: 'Have a token!!!', token: req.headers.authorization }
             super.sendSuccess(res, msg)
         } catch (e) {
             console.log(e);

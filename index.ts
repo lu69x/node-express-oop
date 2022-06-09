@@ -2,8 +2,11 @@
 import express, { Application, RequestHandler } from 'express';
 
 // Server structure
-import Server from "./src/server";
+import Server from "./src/typings/server";
 import db from "./src/models/index"
+
+// configuration
+import { PORT } from './src/config';
 
 // Middlewares
 import { json, urlencoded } from 'body-parser';
@@ -11,9 +14,7 @@ import cors from 'cors';
 
 // Controllers
 import HelloWorldController from './src/controllers/helloworld';
-
-// configuration
-import { PORT } from './src/config';
+import TokenrizeController from './src/controllers/testauth';
 
 
 const app: Application = express();
@@ -30,7 +31,8 @@ Promise.resolve(() => { })
         ])
 
         await server.loadControllers([
-            new HelloWorldController()
+            new HelloWorldController(),
+            new TokenrizeController()
         ])
     })
     .then(() => { server.run() })
